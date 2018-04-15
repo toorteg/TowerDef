@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
+    [SerializeField]
+    private Transform _transform;
+
+    [SerializeField]
+    private Material _material;
+
+    [SerializeField]
+    private Vector2 _gridSize;
+
+    [SerializeField]
+    private int _rows;
+
+    [SerializeField]
+    private int _columns;
 
     [SerializeField]
     private float f_size = 10f;
@@ -11,6 +25,22 @@ public class Grid : MonoBehaviour
     private float f_yGizmos = 0.5f;
     [SerializeField]
     private bool b_drawGizmos = false;
+
+    // Painting Overlay Grid
+    void Start()
+    {
+
+        UpdateGrid();
+
+    }
+    public void UpdateGrid()
+    {
+
+        _transform.localScale = new Vector3(_gridSize.x, _gridSize.y, 1.0f);
+
+        _material.SetTextureScale("_MainTex", new Vector2(_columns, _rows));
+
+    }
 
     // Dunno..
     // Guy is explaining but I didn't listen ^^ Source Code here:
@@ -52,10 +82,6 @@ public class Grid : MonoBehaviour
 
         }
     }
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
 	// Update is called once per frame
 	void Update () {

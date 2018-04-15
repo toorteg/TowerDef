@@ -33,18 +33,24 @@ public class BuildingPlacer : MonoBehaviour
                 hitinfo.point = new Vector3(hitinfo.point.x, 1f, hitinfo.point.z);
                 go_buildingToBuild.transform.position = m_grid.GetNearestPointOnGrid(hitinfo.point);
 
-            // --Legal Check-- --Rendering-- //
-            // Paint Red if Position not legal, else paint green                 
-            // 3. Param is for "has been placed now" Render original color not transparent any more  
+                // --Legal Check-- --Rendering-- //
+                // Paint Red if Position not legal, else paint green                 
+                // 3. Param is for "has been placed now" Render original color not transparent any more  
+
+                if (!isLegalPosition())
+                {
+                    m_placeableBuilding.MaterialChange(go_buildingToBuild, false, false);
+                }
+                else
+                {
+                    m_placeableBuilding.MaterialChange(go_buildingToBuild, true, false);
+                }
+
                 if (Input.GetMouseButtonDown(0) && isLegalPosition() == true)
                 {                    
                         PlaceBuildingNear(go_buildingToBuild.transform.position);
                         m_placeableBuilding.MaterialChange(go_buildingToBuild, true, true);                    
-                }
-                else
-                {
-                    m_placeableBuilding.MaterialChange(go_buildingToBuild, isLegalPosition(), false);
-                }
+                }                
             }
         }
     }
