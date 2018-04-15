@@ -4,6 +4,25 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
+    public GameObject/*[][]*/ goarr_playerGrid;
+
+    [SerializeField]
+    private GameObject _gridObject;
+
+    /*[SerializeField]
+    private Transform _transform;
+
+    [SerializeField]
+    private Material _material;
+
+    [SerializeField]
+    private Vector2 _gridSize;
+    */
+    [SerializeField]
+    private int _rows;
+
+    [SerializeField]
+    private int _columns;
 
     [SerializeField]
     private float f_size = 10f;
@@ -11,6 +30,36 @@ public class Grid : MonoBehaviour
     private float f_yGizmos = 0.5f;
     [SerializeField]
     private bool b_drawGizmos = false;
+  
+    // Painting Overlay Grid
+    void Start()
+    {
+
+        UpdateGrid();
+        
+    }
+
+    public void UpdateGrid()
+    {
+        for(int x = 0; x < _rows; x++)
+        {
+            for(int z = 0; z < _columns; z++)
+            {
+                goarr_playerGrid = GameObject.Instantiate(_gridObject);
+                goarr_playerGrid.transform.position = new Vector3(x, 1f, z);
+                /*GameObject.Instantiate(_gridObject);
+                this.transform.position = new Vector3(x, 0.51f, z);*/
+               /* goarr_playerGrid[x][z] = this.gameObject;
+                Debug.Log(_gridObject.transform.position);
+                Debug.Log(goarr_playerGrid[x][z]);*/
+            }
+        }
+        /*
+        _transform.localScale = new Vector3(_gridSize.x, _gridSize.y, 1.0f);
+
+        _material.SetTextureScale("_MainTex", new Vector2(_columns, _rows));       
+        */
+    }
 
     // Dunno..
     // Guy is explaining but I didn't listen ^^ Source Code here:
@@ -46,19 +95,22 @@ public class Grid : MonoBehaviour
                 for (float z = -50; z < 50; z += f_size)
                 {
                     var point = GetNearestPointOnGrid(new Vector3(x, f_yGizmos, z));
-                    Gizmos.DrawSphere(point, 0.1f);
+                    Gizmos.DrawSphere(point, 0.1f);                   
                 }
             }
 
         }
     }
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+       /* for (int x = 0; x < _gridSize.x; x++)
+        {
+            for (int z = 0; z < _gridSize.y; z++)
+            {
+                _gridObject.transform.position = new Vector3(x, 0.51f, z);
+                goarr_playerGrid[x][z] = GameObject.Instantiate(_gridObject);
+            }
+        }*/
+    }
 }
