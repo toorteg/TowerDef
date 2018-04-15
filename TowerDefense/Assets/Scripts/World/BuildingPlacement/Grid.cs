@@ -41,12 +41,13 @@ public class Grid : MonoBehaviour
 
     public void UpdateGrid()
     {
-        for(int x = 0; x < _rows; x++)
+        for(int x = -49; x < _rows-50; x++)
         {
-            for(int z = 0; z < _columns; z++)
+            for(int z = -49; z < _columns-50; z++)
             {
                 goarr_playerGrid = GameObject.Instantiate(_gridObject);
-                goarr_playerGrid.transform.position = new Vector3(x, 1f, z);
+                goarr_playerGrid.transform.localScale = new Vector3(goarr_playerGrid.transform.localScale.x * 1.5f, goarr_playerGrid.transform.localScale.y * 1.5f, 1.0f );
+                goarr_playerGrid.transform.position = new Vector3(x, 0.51f, z);
                 /*GameObject.Instantiate(_gridObject);
                 this.transform.position = new Vector3(x, 0.51f, z);*/
                /* goarr_playerGrid[x][z] = this.gameObject;
