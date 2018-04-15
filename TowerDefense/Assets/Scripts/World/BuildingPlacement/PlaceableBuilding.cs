@@ -7,6 +7,7 @@ public class PlaceableBuilding : MonoBehaviour {
     [HideInInspector]
     public List<Collider> colliders = new List<Collider>();
     public Material[] materials;
+    private Grid m_grid;
     Renderer rend;
 
     void Start()
@@ -15,11 +16,16 @@ public class PlaceableBuilding : MonoBehaviour {
         rend.enabled = true;
         rend.sharedMaterial = materials[0];
     }
+   
 
     void OnTriggerEnter(Collider col)
     {
-        if(col.tag == "Building")
+        if (col.gameObject.tag == "Ground")
         {
+            Debug.Log("Test");           
+        }
+        if (col.tag == "Building")
+        {            
             colliders.Add(col);            
         }
     }

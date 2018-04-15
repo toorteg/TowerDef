@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
-    public GameObject/*[][]*/ goarr_playerGrid;
+    private GameObject goarr_playerGrid;
+    [SerializeField]
+    private Sprite spriteSpaceFree;
+    [SerializeField]
+    private Sprite spriteSpaceUsed;
 
     [SerializeField]
     private GameObject _gridObject;
@@ -25,41 +29,45 @@ public class Grid : MonoBehaviour
     private int _columns;
 
     [SerializeField]
-    private float f_size = 10f;
+    private float f_size = 1f;
     [SerializeField]
-    private float f_yGizmos = 0.5f;
+    private float f_yGizmos = 1f;
     [SerializeField]
     private bool b_drawGizmos = false;
-  
+    private bool showGrid = false;
     // Painting Overlay Grid
     void Start()
     {
 
-        UpdateGrid();
+        UpdateGrid(-49,-49, _columns-50, _rows-50);
         
     }
 
-    public void UpdateGrid()
+    public void UpdateGrid(int _x, int _z, int _xUpTo, int _zUpTo)
     {
-        for(int x = -49; x < _rows-50; x++)
-        {
-            for(int z = -49; z < _columns-50; z++)
-            {
-                goarr_playerGrid = GameObject.Instantiate(_gridObject);
-                goarr_playerGrid.transform.localScale = new Vector3(goarr_playerGrid.transform.localScale.x * 1.5f, goarr_playerGrid.transform.localScale.y * 1.5f, 1.0f );
-                goarr_playerGrid.transform.position = new Vector3(x, 0.51f, z);
-                /*GameObject.Instantiate(_gridObject);
-                this.transform.position = new Vector3(x, 0.51f, z);*/
-               /* goarr_playerGrid[x][z] = this.gameObject;
-                Debug.Log(_gridObject.transform.position);
-                Debug.Log(goarr_playerGrid[x][z]);*/
-            }
-        }
-        /*
-        _transform.localScale = new Vector3(_gridSize.x, _gridSize.y, 1.0f);
 
-        _material.SetTextureScale("_MainTex", new Vector2(_columns, _rows));       
-        */
+        {
+            for (int x = _x; x < _xUpTo; x++)
+            {
+                for (int z = _z; z < _zUpTo; z++)
+                {
+                    goarr_playerGrid = GameObject.Instantiate(_gridObject);
+                    goarr_playerGrid.transform.position = new Vector3(x, 0.51f, z);
+                    goarr_playerGrid.GetComponent<Renderer>().enabled = showGrid;
+                }
+            }           
+        }
+    }         
+      
+        //goarr_playerGrid.GetComponent<SpriteRenderer>().sprite = newsprite;
+
+    public void SetGrid(RaycastHit _hitinfo)
+    {
+        showGrid = true;
+        UpdateGrid((int)_hitinfo.point.x - 3, (int)_hitinfo.point.z - 3, (int)_hitinfo.point.x + 3, (int)_hitinfo.point.z + 3);
+              
+        /*goarr_playerGrid = _gridToChange;
+        goarr_playerGrid.GetComponent<SpriteRenderer>().sprite = newsprite;   */     
     }
 
     // Dunno..
